@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10116" systemVersion="15E65" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="BYZ-38-t0r">
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
+    </dependencies>
+    <scenes>
+        <!--View Controller-->
+        <scene sceneID="tne-QT-ifu">
+            <objects>
+                <viewController id="BYZ-38-t0r" customClass="ViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="y3c-jy-aDJ"/>
+                        <viewControllerLayoutGuide type="bottom" id="wfy-db-euE"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="bg" translatesAutoresizingMaskIntoConstraints="NO" id="s93-K9-SZb">
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                            </imageView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="做任务时请勿退出&quot;外快宝&quot;" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xWJ-YU-yvY">
+                                <rect key="frame" x="65.5" y="274" width="189.5" height="19.5"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                <color key="textColor" cocoaTouchSystemColor="lightTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="wpV-mI-7AT">
+                                <rect key="frame" x="60" y="317" width="200" height="44"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="21"/>
+                                <state key="normal" title="返回外快宝" backgroundImage="btn_bg">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="goH5:" destination="BYZ-38-t0r" eventType="touchUpInside" id="qgC-AD-rIR"/>
+                                </connections>
+                            </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="版本1.0" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lyu-RN-hZM">
+                                <rect key="frame" x="80" y="539" width="161" height="21"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="21" id="1Eu-YM-2Ii"/>
+                                    <constraint firstAttribute="width" constant="161" id="cVX-eB-dFG"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <color key="textColor" cocoaTouchSystemColor="lightTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="&quot;外快宝132&quot;已绑定，账号ID:132" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="YWr-vj-VS8">
+                                <rect key="frame" x="8" y="503" width="305" height="21"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="305" id="M7W-QU-RZ7"/>
+                                    <constraint firstAttribute="height" constant="21" id="ol4-te-mvy"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstAttribute="trailing" secondItem="s93-K9-SZb" secondAttribute="trailing" id="0cj-O2-Ujj"/>
+                            <constraint firstItem="s93-K9-SZb" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="top" id="20o-0M-WJ7"/>
+                            <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="lyu-RN-hZM" secondAttribute="bottom" constant="8" id="6FO-SS-2UL"/>
+                            <constraint firstItem="xWJ-YU-yvY" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" id="Eeh-iP-jJT"/>
+                            <constraint firstItem="xWJ-YU-yvY" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="QSn-2f-7Lh"/>
+                            <constraint firstItem="s93-K9-SZb" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="VC0-yM-5cq"/>
+                            <constraint firstItem="wpV-mI-7AT" firstAttribute="top" secondItem="xWJ-YU-yvY" secondAttribute="bottom" constant="23.5" id="Zfe-YI-gFK"/>
+                            <constraint firstItem="wpV-mI-7AT" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="Zsd-rq-n3x"/>
+                            <constraint firstItem="YWr-vj-VS8" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="c93-Na-OOk"/>
+                            <constraint firstItem="lyu-RN-hZM" firstAttribute="top" secondItem="YWr-vj-VS8" secondAttribute="bottom" constant="15" id="pUd-Xr-Amk"/>
+                            <constraint firstItem="lyu-RN-hZM" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="pWW-ae-r77"/>
+                            <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="s93-K9-SZb" secondAttribute="bottom" id="zIr-kW-qxi"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="clickBtn" destination="wpV-mI-7AT" id="Nms-tf-vif"/>
+                        <outlet property="idLabel" destination="YWr-vj-VS8" id="C2E-eU-dhv"/>
+                        <outlet property="versionLabel" destination="lyu-RN-hZM" id="ixs-NQ-juV"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="129" y="209"/>
+        </scene>
+    </scenes>
+    <resources>
+        <image name="bg" width="375" height="667"/>
+        <image name="btn_bg" width="200" height="44"/>
+    </resources>
+</document>
