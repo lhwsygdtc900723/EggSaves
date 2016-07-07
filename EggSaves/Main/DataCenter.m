@@ -53,6 +53,21 @@
     [[UIApplication sharedApplication] openURL:[NSURL URLWithString:_appUrl]] ;
 }
 
+- (NSString *)getappurl
+{
+    return _appUrl;
+}
+
+- (NSString *)getappname
+{
+    return _appName;
+}
+
+- (NSString *)getappid
+{
+    return _appId;
+}
+
 - (void)checkRunningProcess
 {
     static int countnum = 0 ;

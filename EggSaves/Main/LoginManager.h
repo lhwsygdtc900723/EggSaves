@@ -8,6 +8,7 @@
 
 #import <Foundation/Foundation.h>
 
+
 @interface LoginManager : NSObject
 
 + (id)getInstance;
@@ -21,6 +22,11 @@
  *  登录接口
  */
 - (void)login;
+
+/**
+ *  查询所有的任务
+ */
+- (void)requestAllTasks;
 
 /**
  *  向服务器提交本地已经下载的应用的任务列表

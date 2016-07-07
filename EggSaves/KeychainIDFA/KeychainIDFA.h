@@ -11,6 +11,7 @@
 //设置你idfa的Keychain标示,该标示相当于key,而你的IDFA是value
 #define IDFA_STRING @"com.adwan.eggs.idfa"
 #define USERID_STRING @"com.adwan.eggs.userid"
+#define PASWORD_STRING @"com.adwan.eggs.password"
 
 @interface KeychainIDFA : NSObject
 
@@ -28,5 +29,11 @@
 
 + (NSString*)getUserId;
 + (BOOL)setUserID:(NSString *)userID;
+
+//password
++ (void)deletePassword;
+
++ (NSString *)getPassword;
++ (BOOL)setPassword:(NSString *)password;
 
 @end

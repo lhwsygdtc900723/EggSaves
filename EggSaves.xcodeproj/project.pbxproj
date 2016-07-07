@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		24386DEF7F94E62289189D33 /* libPods-EggSaves.a in Frameworks */ = {isa = PBXBuildFile; fileRef = BBE1CFFBD55E9924C5B59699 /* libPods-EggSaves.a */; };
 		B92783CB1CFC4AEC009715E5 /* LoginManager.m in Sources */ = {isa = PBXBuildFile; fileRef = B92783CA1CFC4AEC009715E5 /* LoginManager.m */; };
 		B92783D11CFC4BCA009715E5 /* EncryptUtils.mm in Sources */ = {isa = PBXBuildFile; fileRef = B92783CE1CFC4BCA009715E5 /* EncryptUtils.mm */; };
 		B92783D21CFC4BCA009715E5 /* HashUtils.mm in Sources */ = {isa = PBXBuildFile; fileRef = B92783D01CFC4BCA009715E5 /* HashUtils.mm */; };
@@ -24,6 +25,7 @@
 		B92783FD1CFD3763009715E5 /* ViewController+MASAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = B92783F31CFD3763009715E5 /* ViewController+MASAdditions.m */; };
 		B92784001CFE8F4D009715E5 /* TimeHeart.m in Sources */ = {isa = PBXBuildFile; fileRef = B92783FF1CFE8F4D009715E5 /* TimeHeart.m */; };
 		B92784041CFEE43A009715E5 /* BLHud.m in Sources */ = {isa = PBXBuildFile; fileRef = B92784031CFEE43A009715E5 /* BLHud.m */; };
+		B9BE6DE91D2E6D2A004FD63D /* NSString+MD5.m in Sources */ = {isa = PBXBuildFile; fileRef = B9BE6DE81D2E6D2A004FD63D /* NSString+MD5.m */; };
 		B9D1E2BF1CEFFC9B0028D7D9 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = B9D1E2BE1CEFFC9B0028D7D9 /* main.m */; };
 		B9D1E2C21CEFFC9B0028D7D9 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = B9D1E2C11CEFFC9B0028D7D9 /* AppDelegate.m */; };
 		B9D1E2C51CEFFC9B0028D7D9 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B9D1E2C41CEFFC9B0028D7D9 /* ViewController.m */; };
@@ -43,6 +45,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		247529EACB709AB7A2CA2266 /* Pods-EggSaves.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-EggSaves.debug.xcconfig"; path = "Pods/Target Support Files/Pods-EggSaves/Pods-EggSaves.debug.xcconfig"; sourceTree = "<group>"; };
+		3C2FD453E465514F341B9372 /* Pods-EggSaves.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-EggSaves.release.xcconfig"; path = "Pods/Target Support Files/Pods-EggSaves/Pods-EggSaves.release.xcconfig"; sourceTree = "<group>"; };
 		B92783C91CFC4AEC009715E5 /* LoginManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoginManager.h; sourceTree = "<group>"; };
 		B92783CA1CFC4AEC009715E5 /* LoginManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoginManager.m; sourceTree = "<group>"; };
 		B92783CD1CFC4BCA009715E5 /* EncryptUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EncryptUtils.h; sourceTree = "<group>"; };
@@ -83,6 +87,8 @@
 		B92783FF1CFE8F4D009715E5 /* TimeHeart.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TimeHeart.m; sourceTree = "<group>"; };
 		B92784021CFEE43A009715E5 /* BLHud.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BLHud.h; sourceTree = "<group>"; };
 		B92784031CFEE43A009715E5 /* BLHud.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BLHud.m; sourceTree = "<group>"; };
+		B9BE6DE71D2E6D2A004FD63D /* NSString+MD5.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+MD5.h"; sourceTree = "<group>"; };
+		B9BE6DE81D2E6D2A004FD63D /* NSString+MD5.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+MD5.m"; sourceTree = "<group>"; };
 		B9D1E2BA1CEFFC9B0028D7D9 /* EggSaves.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = EggSaves.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B9D1E2BE1CEFFC9B0028D7D9 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		B9D1E2C01CEFFC9B0028D7D9 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -111,6 +117,7 @@
 		B9D1E2F51CF01F060028D7D9 /* KeychainHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KeychainHelper.m; sourceTree = "<group>"; };
 		B9D1E2F61CF01F060028D7D9 /* KeychainIDFA.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KeychainIDFA.h; sourceTree = "<group>"; };
 		B9D1E2F71CF01F060028D7D9 /* KeychainIDFA.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KeychainIDFA.m; sourceTree = "<group>"; };
+		BBE1CFFBD55E9924C5B59699 /* libPods-EggSaves.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-EggSaves.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -119,12 +126,22 @@
 			buildActionMask = 2147483647;
 			files = (
 				B9D1E2EB1CF0159D0028D7D9 /* IOKit.framework in Frameworks */,
+				24386DEF7F94E62289189D33 /* libPods-EggSaves.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		7C86023544F94437138C45A7 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				247529EACB709AB7A2CA2266 /* Pods-EggSaves.debug.xcconfig */,
+				3C2FD453E465514F341B9372 /* Pods-EggSaves.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
 		B92783CC1CFC4BCA009715E5 /* Hash */ = {
 			isa = PBXGroup;
 			children = (
@@ -183,6 +200,7 @@
 				B9D1E2E71CF014DD0028D7D9 /* Frameworks */,
 				B9D1E2BC1CEFFC9B0028D7D9 /* EggSaves */,
 				B9D1E2BB1CEFFC9B0028D7D9 /* Products */,
+				7C86023544F94437138C45A7 /* Pods */,
 			);
 			sourceTree = "<group>";
 		};
@@ -272,6 +290,7 @@
 			isa = PBXGroup;
 			children = (
 				B9D1E2EA1CF0159D0028D7D9 /* IOKit.framework */,
+				BBE1CFFBD55E9924C5B59699 /* libPods-EggSaves.a */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -279,6 +298,8 @@
 		B9D1E2F31CF01F060028D7D9 /* KeychainIDFA */ = {
 			isa = PBXGroup;
 			children = (
+				B9BE6DE71D2E6D2A004FD63D /* NSString+MD5.h */,
+				B9BE6DE81D2E6D2A004FD63D /* NSString+MD5.m */,
 				B9D1E2F41CF01F060028D7D9 /* KeychainHelper.h */,
 				B9D1E2F51CF01F060028D7D9 /* KeychainHelper.m */,
 				B9D1E2F61CF01F060028D7D9 /* KeychainIDFA.h */,
@@ -294,9 +315,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = B9D1E2D11CEFFC9B0028D7D9 /* Build configuration list for PBXNativeTarget "EggSaves" */;
 			buildPhases = (
+				835B914A094A5E7E3E453A39 /* [CP] Check Pods Manifest.lock */,
 				B9D1E2B61CEFFC9B0028D7D9 /* Sources */,
 				B9D1E2B71CEFFC9B0028D7D9 /* Frameworks */,
 				B9D1E2B81CEFFC9B0028D7D9 /* Resources */,
+				B67B2397828257A60BA61F37 /* [CP] Embed Pods Frameworks */,
+				FB92904E8CB518563E098E98 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -358,6 +382,54 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		835B914A094A5E7E3E453A39 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		B67B2397828257A60BA61F37 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-EggSaves/Pods-EggSaves-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		FB92904E8CB518563E098E98 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-EggSaves/Pods-EggSaves-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		B9D1E2B61CEFFC9B0028D7D9 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
@@ -384,6 +456,7 @@
 				B92783D81CFC4C03009715E5 /* TasksManager.m in Sources */,
 				B92783D71CFC4C03009715E5 /* Task.m in Sources */,
 				B92784001CFE8F4D009715E5 /* TimeHeart.m in Sources */,
+				B9BE6DE91D2E6D2A004FD63D /* NSString+MD5.m in Sources */,
 				B92783F61CFD3763009715E5 /* MASConstraintMaker.m in Sources */,
 				B92783FA1CFD3763009715E5 /* NSArray+MASAdditions.m in Sources */,
 				B9D1E2F81CF01F060028D7D9 /* KeychainHelper.m in Sources */,
@@ -502,6 +575,7 @@
 		};
 		B9D1E2D21CEFFC9B0028D7D9 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 247529EACB709AB7A2CA2266 /* Pods-EggSaves.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -518,6 +592,7 @@
 		};
 		B9D1E2D31CEFFC9B0028D7D9 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 3C2FD453E465514F341B9372 /* Pods-EggSaves.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				FRAMEWORK_SEARCH_PATHS = (

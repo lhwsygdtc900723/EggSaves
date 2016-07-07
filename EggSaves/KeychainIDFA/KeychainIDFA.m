@@ -115,6 +115,37 @@
     }
 }
 
++ (void)deletePassword
+{
+    [KeychainHelper delete:PASWORD_STRING];
+}
+
++ (NSString *)getPassword
+{
+    NSString *passwordStr = [KeychainHelper load:PASWORD_STRING];
+    if (kIsStringValid(passwordStr))
+    {
+        return passwordStr;
+    }
+    else
+    {
+        return nil;
+    }
+}
+
++ (BOOL)setPassword:(NSString *)password
+{
+    if (kIsStringValid(password))
+    {
+        [KeychainHelper save:PASWORD_STRING data:password];
+        return YES;
+    }
+    else
+    {
+        return NO;
+    }
+}
+
 #pragma mark - UUID
 + (NSString*)getUUID
 {

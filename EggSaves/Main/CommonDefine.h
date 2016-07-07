@@ -15,6 +15,7 @@
 #define FINISHED_TASK_ID_KEY   @"finishtaskidkey"
 
 extern NSString* const NSUserSignUpNotification ;
+extern NSString* const NSUserRequestAllTaskNotification;
 extern NSString* const NSUserLoginNotification ;
 extern NSString* const NSUserCommitListIdsNotification ;
 extern NSString* const NSUserDoTaskCompletedNotification ;

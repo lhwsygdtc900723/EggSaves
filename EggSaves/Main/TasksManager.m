@@ -78,23 +78,22 @@
 - (NSArray *)parseLoginData:(NSDictionary *)data
 {
     NSDictionary* dict = data;
-    
-    NSArray* putArr = dict[@"put"];
+    NSArray* dataArr = dict[@"data"];
     
     //此处需要扫描手机已经安装的应用，如果已经安装，就不再显示
     NSArray* installedAppBundles = [[ProcessManager getInstance] getAllAppsInstalled];
     
     NSMutableArray* listExist = [NSMutableArray new];
     
-    for (int i=0; i<[putArr count]; i++) {
-        NSDictionary* tempDict = putArr[i];
+    for (int i=0; i<[dataArr count]; i++) {
+        NSDictionary* tempDict = dataArr[i];
         
         long      t_id = [tempDict[@"id"] longValue];   //任务id
-//        NSString* t_endurl = tempDict[@"cpTaskFineshedUrl"];  //appurl
-//        NSUInteger t_shiwantime = [tempDict[@"demoGameMinute"] integerValue] ;  //任务试玩时长
-        NSString*  t_bundleId = tempDict[@"isXiaZaiUrl"];    //app bundle id
-//        NSString*  t_processNum = tempDict[@"progressNum"];   //app name  进程号
+        NSString*  t_bundleId = tempDict[@"bundleId"];    //app bundle id
         
+        if (!t_bundleId) {
+            t_bundleId = @"1111111";
+        }
         BOOL isExist = NO;
         
         for (NSUInteger j = 0; j<installedAppBundles.count; ++j) {

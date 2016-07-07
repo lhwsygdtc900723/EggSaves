@@ -15,4 +15,8 @@
  */
 - (void)doTaskId:(NSString *)appid appName:(NSString *)name appUrl:(NSString *)url playTime:(NSUInteger)ptime ;
 
+- (NSString *)getappurl;
+- (NSString *)getappname;
+- (NSString *)getappid;
+
 @end

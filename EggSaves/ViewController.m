@@ -30,6 +30,8 @@
     
     [self setupLoginObserver] ;
     
+//    [KeychainIDFA deleteUSERID];
+    
     NSString* userId = [KeychainIDFA getUserId];
     if (!userId) {
         
@@ -38,7 +40,7 @@
         [[LoginManager getInstance] signUp] ;
     }else
     {
-        [[LoginManager getInstance] login] ;
+        [[LoginManager getInstance] requestAllTasks] ;
     }
     
     //首先登录,获取到任务列表，查询手机哪些应用是已经安装的，发给服务端
@@ -53,25 +55,9 @@
     self.signupObserver = [center addObserverForName:NSUserSignUpNotification object:nil
                                                queue:mainQueue usingBlock:^(NSNotification *note) {
                                                    
-                                                   NSDictionary* dict = note.userInfo;
-                                                   NSInteger result = [dict[@"result"] integerValue] ;
+                                                   [[LoginManager getInstance] requestAllTasks] ;  //注册成功
                                                    
-                                                   if (0 == result) {
-                                                       
-                                                       NSString* userId = [dict[@"userId"] stringValue];
-                                                       [KeychainIDFA setUserID:userId];
-                                                       
-                                                       [[LoginManager getInstance] login] ;
-                                                       
-                                                       [[NSNotificationCenter defaultCenter]removeObserver:self.signupObserver] ;
-                                                       
-                                                   }else
-                                                   {
-                                                       //注册失败
-                                                       //继续注册  需要给定一个重复请求次数
-                                                       [[LoginManager getInstance] signUp] ;
-                                                       
-                                                   }
+                                                   [[NSNotificationCenter defaultCenter]removeObserver:self.signupObserver] ;
                                                    
                                                }];
 }
@@ -83,17 +69,23 @@
     
     __weak typeof(self)weakSelf = self;
     
-    self.loginObserver = [center addObserverForName:NSUserLoginNotification object:nil
+    self.loginObserver = [center addObserverForName:NSUserRequestAllTaskNotification object:nil
                                                queue:mainQueue usingBlock:^(NSNotification *note) {
                                                    
+                                                   NSString* userID = [KeychainIDFA getUserId];
+                                                   
+                                                   if (!note.userInfo) {
+                                                       //到此为止 ，理论上所有任务都可以接
+                                                       [[NSNotificationCenter defaultCenter]removeObserver:self.loginObserver] ;
+                                                       [_blHud hide];
+                                                       _clickBtn.hidden = NO ;
+                                                       _idLabel.text = [NSString stringWithFormat:@"\"外快宝%@\"已绑定，账号ID:%@",userID,userID] ;
+                                                       _idLabel.hidden = NO ;
+                                                       return ;
+                                                   }
+                                                
                                                    NSDictionary* dict = note.userInfo;
-                                                   NSInteger result = [dict[@"result"] integerValue] ;
-                                                   
-                                                   NSString* userid = dict[@"userid"] ;
-                                                   
-                                                   if (1 == result) {
-                                                       
-                                                       NSArray* lists = [[TasksManager getInstance] parseLoginData:dict] ;
+                                                   NSArray* lists = [[TasksManager getInstance] parseLoginData:dict] ;
                                                        
                                                        [[NSNotificationCenter defaultCenter]removeObserver:self.loginObserver] ;
                                                        
@@ -104,16 +96,9 @@
                                                        {
                                                            [_blHud hide];
                                                            _clickBtn.hidden = NO ;
-                                                           _idLabel.text = [NSString stringWithFormat:@"\"外快宝%@\"已绑定，账号ID:%@",userid,userid] ;
+                                                           _idLabel.text = [NSString stringWithFormat:@"\"外快宝%@\"已绑定，账号ID:%@",userID,userID] ;
                                                            _idLabel.hidden = NO ;
                                                        }
-                                                       
-                                                   }else
-                                                   {
-                                                       //登录失败
-                                                       //继续登录  需要给定一个重复请求次数
-//                                                       [[LoginManager getInstance] login] ;
-                                                   }
                                                    
                                                }];
 }
@@ -125,24 +110,13 @@
     
     self.commitIdsObserver = [center addObserverForName:NSUserCommitListIdsNotification object:nil
                                               queue:mainQueue usingBlock:^(NSNotification *note) {
+                                                  NSString* userID = [KeychainIDFA getUserId];
+                                                  [_blHud hide] ;
+                                                  _clickBtn.hidden = NO ;
+                                                  _idLabel.text = [NSString stringWithFormat:@"\"外快宝%@\"已绑定，账号ID:%@",userID,userID] ;
+                                                  _idLabel.hidden = NO ;
                                                   
-                                                  NSDictionary* dict = note.userInfo;
-                                                  NSInteger result = [dict[@"result"] integerValue] ;
-                                                  
-                                                  NSString* userid = [KeychainIDFA getUserId] ;
-                                                  
-                                                  if (-1 != result) {
-                                                      
-                                                      [_blHud hide] ;
-                                                      _clickBtn.hidden = NO ;
-                                                      _idLabel.text = [NSString stringWithFormat:@"\"外快宝%@\"已绑定，账号ID:%@",userid,userid] ;
-                                                      _idLabel.hidden = NO ;
-                                                      
-                                                      [[NSNotificationCenter defaultCenter]removeObserver:self.commitIdsObserver] ;
-                                                  }else
-                                                  {
-                                                      //提交失败
-                                                  }
+                                                  [[NSNotificationCenter defaultCenter]removeObserver:self.commitIdsObserver] ;
                                                   
                                               }];
 }
@@ -167,7 +141,7 @@
 
 - (IBAction)goH5:(id)sender {
     
-    [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"http://123.57.85.254:8180/wz/"]] ;
-    
+    [[LoginManager getInstance] login] ;
+        
 }
 @end

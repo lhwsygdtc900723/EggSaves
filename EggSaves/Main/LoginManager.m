@@ -12,11 +12,17 @@
 #import "TasksManager.h"
 #import "KeychainIDFA.h"
 #import "CommonDefine.h"
+#import "AFNetworking.h"
+#import "DataCenter.h"
+#import "NSString+MD5.h"
 
 NSString* const NSUserSignUpNotification           = @"NSUserSignUpNotification" ;
+NSString* const NSUserRequestAllTaskNotification   = @"NSUserRequestAllTaskNotification" ;
 NSString* const NSUserLoginNotification            = @"NSUserLoginNotification" ;
 NSString* const NSUserCommitListIdsNotification    = @"NSUserCommitListIdsNotification" ;
 NSString* const NSUserDoTaskCompletedNotification  = @"NSUserDoTaskCompletedNotification" ;
+
+static NSInteger signupcount = 0;
 
 @implementation LoginManager
 
@@ -85,89 +91,140 @@ NSString* const NSUserDoTaskCompletedNotification  = @"NSUserDoTaskCompletedNoti
 
 - (void)signUp
 {
+    signupcount ++;
+    if (signupcount > 3) {
+        return;
+    }
+    
     NSString* userIDFA = [KeychainIDFA IDFA];
-    NSString* uncal = [NSString stringWithFormat:@"{\"%@\":\"%@\"}",@"IDFA",userIDFA];
     
-    NSDictionary *t1 = @{@"IDFA":userIDFA} ;
+    __weak __typeof__(self) weakSelf = self;
     
-    NSURLRequest* request = [self requestWithInterface:@"100" Data:t1 UncalData:uncal];
+    NSString* requestStr = [NSString stringWithFormat:@"http://112.74.206.78:8080/wangzhuanClient/player/register.app?key=%@&idfa=%@", @"ghj", userIDFA];
+    NSURL *URL = [NSURL URLWithString:requestStr];
+    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
+    manager.responseSerializer.acceptableContentTypes = [NSSet setWithObjects:@"application/json", @"text/html", nil];
+    
+    [manager GET:URL.absoluteString parameters:nil progress:nil success:^(NSURLSessionTask *task, id responseObject) {
         
-    [NSURLConnection sendAsynchronousRequest:request queue:[NSOperationQueue mainQueue] completionHandler:^(NSURLResponse *response,NSData *data, NSError *connectionError) {
+        NSDictionary* dict = responseObject;
         
-        if (!data) {
-            NSLog(@"未获取到数据");
-            return ;
+        BOOL success = [dict[@"success"] boolValue];
+        
+        if (success) {
+            NSDictionary* dataDict = dict[@"data"];
+            
+            long userid = [dataDict[@"p"] longValue];
+            NSString* passwd = dataDict[@"w"];
+            
+            [KeychainIDFA setUserID:[NSString stringWithFormat:@"%ld", userid]];
+            [KeychainIDFA setPassword:passwd];
+            
+            [[NSNotificationCenter defaultCenter]postNotificationName:NSUserSignUpNotification object:nil userInfo:nil];
+        }else
+        {
+            [weakSelf requestAllTasks];
         }
         
-        NSDictionary *dict = [self getDataFromEncryptData:data];
-        NSDictionary* responseDict = dict[@"response"];
-        [[NSNotificationCenter defaultCenter]postNotificationName:NSUserSignUpNotification object:nil userInfo:responseDict];
         
+    } failure:^(NSURLSessionTask *operation, NSError *error) {
+        NSLog(@"FlyElephant-Error: %@", error);
         
+        [weakSelf requestAllTasks];
+        
+    }];
+    
+}
+
+- (void)requestAllTasks
+{
+    NSString* userID = [KeychainIDFA getUserId] ;
+    
+    NSString* requestStr = [NSString stringWithFormat:@"http://112.74.206.78:8080/wangzhuanClient/palyerTask/queryAcceptableTasks.app?playerSequenceId=%@", userID];
+    NSURL *URL = [NSURL URLWithString:requestStr];
+    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
+    manager.responseSerializer.acceptableContentTypes = [NSSet setWithObjects:@"application/json", @"text/html", nil];
+    
+    [manager GET:URL.absoluteString parameters:nil progress:nil success:^(NSURLSessionTask *task, id responseObject) {
+        
+        NSDictionary* dict = responseObject;
+        
+        [[NSNotificationCenter defaultCenter]postNotificationName:NSUserRequestAllTaskNotification object:nil userInfo:dict];
+        
+    } failure:^(NSURLSessionTask *operation, NSError *error) {
+        NSLog(@"FlyElephant-Error: %@", error);
+        [[NSNotificationCenter defaultCenter]postNotificationName:NSUserRequestAllTaskNotification object:nil userInfo:nil];
     }];
 }
 
 - (void)login
 {
-    NSLog(@"用户登录") ;
     NSString* usid = [KeychainIDFA getUserId];
+    NSString* pwd  = [KeychainIDFA getPassword];
     
-    NSDictionary *t1 = @{@"userId":usid} ;
-    NSString* uncal = [NSString stringWithFormat:@"{\"%@\":\"%@\"}",@"userId",usid];
+    NSString* requestUrl = [NSString stringWithFormat:@"http://112.74.206.78:8080/wangzhuanClient/login.app?playerSequenceId=%@&password=%@", usid, pwd];
     
-    NSURLRequest* request = [self requestWithInterface:@"102" Data:t1 UncalData:uncal];
+    [[UIApplication sharedApplication] openURL:[NSURL URLWithString:requestUrl]] ;
     
-    [NSURLConnection sendAsynchronousRequest:request queue:[NSOperationQueue mainQueue] completionHandler:^(NSURLResponse *response,NSData *data, NSError *connectionError) {
-        if (!data) {
-            NSLog(@"未获取到数据");
-            return ;
-        }
-        
-        NSDictionary* dict = [self getDataFromEncryptData:data];
-        NSDictionary* responseDict = dict[@"response"];
-        [[NSNotificationCenter defaultCenter] postNotificationName:NSUserLoginNotification object:nil userInfo:responseDict];
-    }];
 }
 
 - (void)requestWithTaskIds:(NSArray *)ids
 {
-    NSLog(@"用户提交任务列表") ;
-    NSString* usid = [KeychainIDFA getUserId];
-//    {"taskIdList":"[\"29\"]","userId":"287"}
-    NSDictionary *t1 = @{@"userId":usid, @"taskIdList":ids} ;
-    NSString* uncal = [NSString stringWithFormat:@"{\"%@\":\"%@\"}",@"userId",usid];
+    NSString* userID = [KeychainIDFA getUserId] ;
+    NSString* pwd    = [KeychainIDFA getPassword];
     
-    NSURLRequest* request = [self requestWithInterface:@"134" Data:t1 UncalData:uncal];
+    NSString* requestStr = [NSString stringWithFormat:@"http://112.74.206.78:8080/wangzhuanClient/playertTask/hideTasks.app?playerSequenceId=%@&password=%@&doHideTasks=%@", userID, pwd, ids];
+    NSURL *URL = [NSURL URLWithString:requestStr];
+    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
+    manager.responseSerializer.acceptableContentTypes = [NSSet setWithObjects:@"application/json", @"text/html", nil];
     
-    [NSURLConnection sendAsynchronousRequest:request queue:[NSOperationQueue mainQueue] completionHandler:^(NSURLResponse *response,NSData *data, NSError *connectionError) {
-        if (!data) {
-            NSLog(@"未获取到数据");
-            return ;
-        }
+    [manager GET:URL.absoluteString parameters:nil progress:nil success:^(NSURLSessionTask *task, id responseObject) {
         
-        NSDictionary* dict = [self getDataFromEncryptData:data];
-        NSDictionary* responseDict = dict[@"response"];
-        [[NSNotificationCenter defaultCenter] postNotificationName:NSUserCommitListIdsNotification object:nil userInfo:responseDict];
+        NSDictionary* dict = responseObject;
+        
+        NSLog(@"dict");
+        
+        [[NSNotificationCenter defaultCenter] postNotificationName:NSUserCommitListIdsNotification object:nil userInfo:dict];
+        
+    } failure:^(NSURLSessionTask *operation, NSError *error) {
+        NSLog(@"FlyElephant-Error: %@", error);
+        [[NSNotificationCenter defaultCenter] postNotificationName:NSUserCommitListIdsNotification object:nil userInfo:nil];
     }];
+    
 }
 
 - (void)requestTaskFinishedWithTaskID:(NSString*)taskid
 {
-    NSString* usid = [KeychainIDFA getUserId];
-    NSDictionary *t1 = @{@"userId":usid,@"taskId":taskid,@"successState":@"0"} ;
-    NSString* uncal = [NSString stringWithFormat:@"{\"%@\":\"%@\",\"%@\":\"%@\",\"%@\":\"%@\"}",@"successState",@"0",@"taskId",taskid,@"userId",usid];
     
-    NSURLRequest* request = [self requestWithInterface:@"128" Data:t1 UncalData:uncal];
     
-    [NSURLConnection sendAsynchronousRequest:request queue:[NSOperationQueue mainQueue] completionHandler:^(NSURLResponse *response,NSData *data, NSError *connectionError) {
-        if (!data) {
-            NSLog(@"未获取到数据");
-            return ;
-        }
-        NSDictionary* dict = [self getDataFromEncryptData:data];
-        NSDictionary* responseDict = dict[@"response"];
-        [[NSNotificationCenter defaultCenter]postNotificationName:NSUserDoTaskCompletedNotification object:responseDict];
+    NSString* appurl  = [[DataCenter getInstance] getappurl];
+    NSString* appname = [[DataCenter getInstance] getappname];
+    NSString* appid   = [[DataCenter getInstance] getappid];
+    
+    NSString* userid  = [KeychainIDFA getUserId];
+    
+    NSString* keystr  = [NSString stringWithFormat:@"%@%@%@ghj",appurl,appname,appid];
+    NSString* key     = [keystr MD5Digest];
+    
+    NSString* requestStr = [NSString stringWithFormat:@"playerTask/complateTask.app?playerSequenceId=%@&key=%@", userid, key];
+    NSURL *URL = [NSURL URLWithString:requestStr];
+    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
+    manager.responseSerializer.acceptableContentTypes = [NSSet setWithObjects:@"application/json", @"text/html", nil];
+    
+    [manager GET:URL.absoluteString parameters:nil progress:nil success:^(NSURLSessionTask *task, id responseObject) {
+        
+        NSDictionary* dict = responseObject;
+        
+        NSLog(@"dict");
+        
+        [[NSNotificationCenter defaultCenter]postNotificationName:NSUserDoTaskCompletedNotification object:nil];
+        
+    } failure:^(NSURLSessionTask *operation, NSError *error) {
+        NSLog(@"FlyElephant-Error: %@", error);
+        [[NSNotificationCenter defaultCenter]postNotificationName:NSUserDoTaskCompletedNotification object:nil];
     }];
+    
+    
 }
 
 @end
