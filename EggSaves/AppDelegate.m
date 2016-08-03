@@ -1,5 +1,3 @@
-
-
 #import "AppDelegate.h"
 #import <AVFoundation/AVFoundation.h>
 #import "AudioManager.h"
@@ -18,6 +16,8 @@
     //进来之后就要记录试玩的时间, 以及试玩时间结束后通知服务器，任务已经完成
     
     NSString* urlString = [url absoluteString];
+    
+    NSLog(@"absoluteString = %@", urlString);
     
     NSArray*  a1        = [urlString componentsSeparatedByString:@"?"] ;
     
@@ -59,6 +59,7 @@
 }
 
 - (void)applicationDidEnterBackground:(UIApplication *)application {
+    
     UIApplication*   app = [UIApplication sharedApplication];
     __block    UIBackgroundTaskIdentifier bgTask;
     bgTask = [app beginBackgroundTaskWithExpirationHandler:^{

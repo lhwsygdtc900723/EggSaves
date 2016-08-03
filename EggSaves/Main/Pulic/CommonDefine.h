@@ -1,11 +1,3 @@
-//
-//  CommonDefine.h
-//  EggSaves
-//
-//  Created by 郭洪军 on 5/31/16.
-//  Copyright © 2016 郭洪军. All rights reserved.
-//
-
 #ifndef CommonDefine_h
 #define CommonDefine_h
 
@@ -15,11 +7,13 @@
 #define FINISHED_TASK_ID_KEY   @"finishtaskidkey"
 
 extern NSString* const NSUserSignUpNotification ;
-extern NSString* const NSUserRequestAllTaskNotification;
-extern NSString* const NSUserLoginNotification ;
+extern NSString* const NSUserCommitAllBundleIdsNotification ;
+extern NSString* const NSUserCommitBundleIdNotification ;
 extern NSString* const NSUserCommitListIdsNotification ;
 extern NSString* const NSUserDoTaskCompletedNotification ;
 
 #define NO_NETWORK   0
+
+#define RECREATE_USER   0
 
 #endif /* CommonDefine_h */

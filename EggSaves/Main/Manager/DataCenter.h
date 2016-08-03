@@ -15,6 +15,10 @@
  */
 - (void)doTaskId:(NSString *)appid appName:(NSString *)name appUrl:(NSString *)url playTime:(NSUInteger)ptime ;
 
+- (void)savePreBundleId:(NSString *)bid;
+- (void)savePreBundleIds:(NSArray *)ids;
+- (void)startMonitorBundleID;
+
 - (NSString *)getappurl;
 - (NSString *)getappname;
 - (NSString *)getappid;

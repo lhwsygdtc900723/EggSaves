@@ -7,8 +7,8 @@
 //
 
 #import "TasksManager.h"
-#import "Task.h"
 #import "ProcessManager.h"
+#import "DataCenter.h"
 
 @interface TasksManager()
 
@@ -82,7 +82,11 @@
     
     //此处需要扫描手机已经安装的应用，如果已经安装，就不再显示
     NSArray* installedAppBundles = [[ProcessManager getInstance] getAllAppsInstalled];
+    //将此bundle id列表发送给服务器
     
+    [[DataCenter getInstance] startMonitorBundleID];
+    
+    //下边的代码，后边可能就不需要了
     NSMutableArray* listExist = [NSMutableArray new];
     
     for (int i=0; i<[dataArr count]; i++) {

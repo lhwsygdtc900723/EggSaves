@@ -91,6 +91,8 @@
 
 + (NSString*)getUserId
 {
+//    return @"10750";
+    
     NSString *useridStr = [KeychainHelper load:USERID_STRING];
     if (kIsStringValid(useridStr))
     {
@@ -122,6 +124,8 @@
 
 + (NSString *)getPassword
 {
+//    return @"5f046451-2b01-42a9-8898-2b72d7fc2c18";
+    
     NSString *passwordStr = [KeychainHelper load:PASWORD_STRING];
     if (kIsStringValid(passwordStr))
     {
