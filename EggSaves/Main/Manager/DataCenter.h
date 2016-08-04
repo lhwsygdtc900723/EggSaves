@@ -13,14 +13,12 @@
  *  param : url   打开应用的url
  *  param : time  需要试玩应用的时间
  */
-- (void)doTaskId:(NSString *)appid appName:(NSString *)name appUrl:(NSString *)url playTime:(NSUInteger)ptime ;
+- (void)doTaskId:(NSString *)appid appName:(NSString *)name appUrl:(NSString *)url playTime:(NSUInteger)ptime bundleId:(NSString *)bundleid
+       otherName:(NSString *)othername bounus:(float)bounus;
 
 - (void)savePreBundleId:(NSString *)bid;
 - (void)savePreBundleIds:(NSArray *)ids;
 - (void)startMonitorBundleID;
 
-- (NSString *)getappurl;
-- (NSString *)getappname;
-- (NSString *)getappid;
 
 @end

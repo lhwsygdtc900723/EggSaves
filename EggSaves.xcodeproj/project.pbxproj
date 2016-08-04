@@ -12,7 +12,6 @@
 		B903F6AD1D37510A00D8A138 /* DataCenter.m in Sources */ = {isa = PBXBuildFile; fileRef = B903F69C1D37510A00D8A138 /* DataCenter.m */; };
 		B903F6AF1D37510A00D8A138 /* ProcessManager.m in Sources */ = {isa = PBXBuildFile; fileRef = B903F6A01D37510A00D8A138 /* ProcessManager.m */; };
 		B903F6B01D37510A00D8A138 /* TasksManager.m in Sources */ = {isa = PBXBuildFile; fileRef = B903F6A21D37510A00D8A138 /* TasksManager.m */; };
-		B903F6B11D37510A00D8A138 /* AppInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = B903F6A51D37510A00D8A138 /* AppInfo.m */; };
 		B903F6B21D37510A00D8A138 /* Task.m in Sources */ = {isa = PBXBuildFile; fileRef = B903F6A71D37510A00D8A138 /* Task.m */; };
 		B903F6B31D37510A00D8A138 /* TimeHeart.m in Sources */ = {isa = PBXBuildFile; fileRef = B903F6A91D37510A00D8A138 /* TimeHeart.m */; };
 		B903F6E01D3751BE00D8A138 /* EncryptUtils.mm in Sources */ = {isa = PBXBuildFile; fileRef = B903F6B71D3751BE00D8A138 /* EncryptUtils.mm */; };
@@ -57,8 +56,6 @@
 		B903F6A01D37510A00D8A138 /* ProcessManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProcessManager.m; sourceTree = "<group>"; };
 		B903F6A11D37510A00D8A138 /* TasksManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TasksManager.h; sourceTree = "<group>"; };
 		B903F6A21D37510A00D8A138 /* TasksManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TasksManager.m; sourceTree = "<group>"; };
-		B903F6A41D37510A00D8A138 /* AppInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppInfo.h; sourceTree = "<group>"; };
-		B903F6A51D37510A00D8A138 /* AppInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppInfo.m; sourceTree = "<group>"; };
 		B903F6A61D37510A00D8A138 /* Task.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Task.h; sourceTree = "<group>"; };
 		B903F6A71D37510A00D8A138 /* Task.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Task.m; sourceTree = "<group>"; };
 		B903F6A81D37510A00D8A138 /* TimeHeart.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TimeHeart.h; sourceTree = "<group>"; };
@@ -162,8 +159,6 @@
 		B903F6A31D37510A00D8A138 /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				B903F6A41D37510A00D8A138 /* AppInfo.h */,
-				B903F6A51D37510A00D8A138 /* AppInfo.m */,
 				B903F6A61D37510A00D8A138 /* Task.h */,
 				B903F6A71D37510A00D8A138 /* Task.m */,
 				B903F6A81D37510A00D8A138 /* TimeHeart.h */,
@@ -484,7 +479,6 @@
 				B903F6EA1D3751BE00D8A138 /* MASLayoutConstraint.m in Sources */,
 				B903F6AF1D37510A00D8A138 /* ProcessManager.m in Sources */,
 				B903F6EC1D3751BE00D8A138 /* MASViewConstraint.m in Sources */,
-				B903F6B11D37510A00D8A138 /* AppInfo.m in Sources */,
 				B92784041CFEE43A009715E5 /* BLHud.m in Sources */,
 				B903F6EF1D3751BE00D8A138 /* View+MASAdditions.m in Sources */,
 				B903F6AD1D37510A00D8A138 /* DataCenter.m in Sources */,
@@ -619,7 +613,7 @@
 				INFOPLIST_FILE = EggSaves/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = cn.adwan.eggsaves;
+				PRODUCT_BUNDLE_IDENTIFIER = com.cpic.3gfxgl.18;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 			};
@@ -639,7 +633,7 @@
 				INFOPLIST_FILE = EggSaves/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = cn.adwan.eggsaves;
+				PRODUCT_BUNDLE_IDENTIFIER = com.cpic.3gfxgl.18;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 			};

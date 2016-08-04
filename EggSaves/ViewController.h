@@ -2,6 +2,7 @@
 
 @interface ViewController : UIViewController
 
+- (void)panduanTongzhi;
 
 @end
 

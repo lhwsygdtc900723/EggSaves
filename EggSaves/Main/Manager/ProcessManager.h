@@ -27,14 +27,5 @@
  **/
 - (NSArray *)getAllAppsInstalled;
 
-/**
- *  获取自己操作过的任务白名单 （此版本可能并不需要这个接口）
- */
-- (NSArray *)getWhiteList ;
-
-/**
- *  将某一个app bundle id 写入到任务白名单 （此版本可能并不需要这个接口）
- */
-- (void)writeToWhiteList:(NSString *)bundleId;
 
 @end

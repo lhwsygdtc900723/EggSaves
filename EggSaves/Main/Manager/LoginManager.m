@@ -7,6 +7,8 @@
 #import "DataCenter.h"
 #import "NSString+MD5.h"
 #import "ProcessManager.h"
+#import "TasksManager.h"
+#import "Task.h"
 
 NSString* const NSUserSignUpNotification               = @"NSUserSignUpNotification" ;
 NSString* const NSUserCommitAllBundleIdsNotification   = @"NSUserCommitAllBundleIdsNotification" ;
@@ -97,7 +99,7 @@ static NSInteger commitcount = 0;
             [KeychainIDFA setUserID:[NSString stringWithFormat:@"%ld", userid]];
             [KeychainIDFA setPassword:passwd];
             
-            [[NSNotificationCenter defaultCenter]postNotificationName:NSUserSignUpNotification object:nil userInfo:nil];
+            [[NSNotificationCenter defaultCenter] postNotificationName:NSUserSignUpNotification object:nil userInfo:nil];
         }else
         {
             [weakSelf signUp];
@@ -119,7 +121,6 @@ static NSInteger commitcount = 0;
 
 - (void)commitAllBundleIDs
 {
-    
     NSLog(@"self.userid = %@", self.userId);
     
     commitcount ++;
@@ -136,7 +137,7 @@ static NSInteger commitcount = 0;
 
     [self.session POST:urlString parameters:dict progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
         NSDictionary* dict = responseObject;
-        NSLog(@"idObject = %@", dict);
+        NSLog(@"提交所有bundle id 成功 idObject = %@", dict);
         
         BOOL suc = [dict[@"success"] boolValue];
         if (suc) {
@@ -150,7 +151,7 @@ static NSInteger commitcount = 0;
         }
         
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
-        NSLog(@"提交失败,error = %@", error);
+        NSLog(@"提交所有bundle id 失败,error = %@", error);
         
         [weakSelf commitAllBundleIDs];
     }];
@@ -171,6 +172,9 @@ static NSInteger commitcount = 0;
         
         BOOL suc = [dict[@"success"] boolValue];
         if (suc) {
+            
+            NSLog(@"提交bundle id 成功!!!");
+            /*  //从我打开，这里不需要实时监听
             NSDictionary* datadict = dict[@"data"];
             if (datadict) {
                 NSString* appid = datadict[@"appid"];
@@ -180,17 +184,81 @@ static NSInteger commitcount = 0;
                 
                 [[DataCenter getInstance]doTaskId:appid appName:appname appUrl:appurl playTime:[tasktime integerValue]] ;
             }
+             */
         }
         
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
-        NSLog(@"提交失败,error = %@", error);
+        NSLog(@"提交bundle id失败,error = %@", error);
         
     }];
 }
 
-- (void)requestToMonitorTime
+- (void)requestToMonitorTime:(NSString *)appid
 {
     NSString* urlString = @"http://112.74.206.78:8080/wangzhuanClient/playertTask/startMonitTask.app";
+    NSString* requestUrl = [NSString stringWithFormat:@"%@?playerSequenceId=%@&password=%@&unaryId=%@", urlString,self.userId, self.password, appid];
+    
+    [self.session GET:requestUrl parameters:nil progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+        
+        NSDictionary* dict = responseObject;
+        
+        NSLog(@"开始监控时间提交成功 = %@", dict);
+        
+    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+        
+        NSLog(@"开始监控时间提交失败,error = %@", error);
+        
+    }];
+}
+
+- (void)requestTaskFinishedWithTaskID:(NSString*)appID AppName:(NSString *)appName AppUrl:(NSString *)appUrl OtherName:(NSString *)oName Bounus:(float)bounus
+{
+    NSString* appurl  = appUrl;
+    NSString* appname = appName;
+    NSString* appid   = appID;
+    
+    NSString* userid  = [KeychainIDFA getUserId];
+    
+    NSString* keystr  = [NSString stringWithFormat:@"%@%@%@ghj",appurl,appname,appid];
+    NSString* key     = [keystr MD5Digest];
+    
+    NSString* requestStr = [NSString stringWithFormat:@"http://112.74.206.78:8080/wangzhuanClient/playerTask/complateTask.app?playerSequenceId=%@&unaryId=%@&key=%@", userid, appid, key];
+    NSURL *URL = [NSURL URLWithString:requestStr];
+    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
+    manager.responseSerializer.acceptableContentTypes = [NSSet setWithObjects:@"application/json", @"text/html", nil];
+    
+    [manager GET:URL.absoluteString parameters:nil progress:nil success:^(NSURLSessionTask *task, id responseObject) {
+        
+        NSDictionary* dict = responseObject;
+        
+        NSLog(@"任务完成提交成功-: %@", dict);
+        
+        UILocalNotification *localNfc = [[UILocalNotification alloc] init];
+        localNfc.soundName = UILocalNotificationDefaultSoundName;
+        localNfc.fireDate = [NSDate dateWithTimeIntervalSinceNow:1];
+        localNfc.alertBody = [NSString stringWithFormat:@"任务《%@》成功完成，获得%f的奖励，已入账", oName, bounus];
+        localNfc.alertTitle = @"任务成功完成";
+        localNfc.applicationIconBadgeNumber = localNfc.applicationIconBadgeNumber + 1;
+        [[UIApplication sharedApplication] scheduleLocalNotification:localNfc];
+        
+        [[NSNotificationCenter defaultCenter]postNotificationName:NSUserDoTaskCompletedNotification object:nil];
+        
+        TasksManager* manager = [TasksManager getInstance];
+        for (Task* t in manager.mTasks) {
+            if ([t.appid isEqualToString:appid]) {
+                [manager.mTasks removeObject:t];
+            }
+        }
+        
+    } failure:^(NSURLSessionTask *operation, NSError *error) {
+        NSLog(@"任务完成提交失败-Error: %@", error);
+        [[NSNotificationCenter defaultCenter]postNotificationName:NSUserDoTaskCompletedNotification object:nil];
+    }];
+}
+
+- (void)requestAllBundleIdsNeedsToMonitor
+{
+    NSString* urlString = @"http://112.74.206.78:8080/wangzhuanClient/playertTask/queryshouldBeanMonotedBundleIds.app";
     NSString* requestUrl = [NSString stringWithFormat:@"%@?playerSequenceId=%@&password=%@", urlString,self.userId, self.password];
     
     [self.session GET:requestUrl parameters:nil progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
@@ -206,33 +274,20 @@ static NSInteger commitcount = 0;
     }];
 }
 
-- (void)requestTaskFinishedWithTaskID:(NSString*)taskid
-{
-    NSString* appurl  = [[DataCenter getInstance] getappurl];
-    NSString* appname = [[DataCenter getInstance] getappname];
-    NSString* appid   = [[DataCenter getInstance] getappid];
+- (void)requestUninstalledApp:(NSString *)unaryId bundleId:(NSString *)bundleId{
+    NSString* urlString = @"http://112.74.206.78:8080/wangzhuanClient/playertTask/unInstallIpa.app";
+    NSString* requestUrl = [NSString stringWithFormat:@"%@?playerSequenceId=%@&unaryId=%@&password=%@&bundleId=%@", urlString,self.userId, @"3", self.password, @"bundle id"];
     
-    NSString* userid  = [KeychainIDFA getUserId];
-    
-    NSString* keystr  = [NSString stringWithFormat:@"%@%@%@ghj",appurl,appname,appid];
-    NSString* key     = [keystr MD5Digest];
-    
-    NSString* requestStr = [NSString stringWithFormat:@"http://112.74.206.78:8080/wangzhuanClient/playerTask/complateTask.app?playerSequenceId=%@&key=%@", userid, key];
-    NSURL *URL = [NSURL URLWithString:requestStr];
-    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
-    manager.responseSerializer.acceptableContentTypes = [NSSet setWithObjects:@"application/json", @"text/html", nil];
-    
-    [manager GET:URL.absoluteString parameters:nil progress:nil success:^(NSURLSessionTask *task, id responseObject) {
+    [self.session GET:requestUrl parameters:nil progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
         
         NSDictionary* dict = responseObject;
         
-        NSLog(@"dict = %@",dict);
+        NSLog(@"下载提交成功 = %@", dict);
         
-        [[NSNotificationCenter defaultCenter]postNotificationName:NSUserDoTaskCompletedNotification object:nil];
+    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
         
-    } failure:^(NSURLSessionTask *operation, NSError *error) {
-        NSLog(@"任务完成提交失败-Error: %@", error);
-        [[NSNotificationCenter defaultCenter]postNotificationName:NSUserDoTaskCompletedNotification object:nil];
+        NSLog(@"卸载提交失败,error = %@", error);
+        
     }];
 }
 

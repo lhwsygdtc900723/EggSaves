@@ -6,6 +6,8 @@
 #import <UIKit/UIKit.h>
 #import "LoginManager.h"
 #import "CommonDefine.h"
+#import "Task.h"
+#import "TasksManager.h"
 
 #define PROCESS_REFRESH_TIME 5
 #define BUNDLE_REFRESH_TIMER 1
@@ -16,6 +18,7 @@
     NSTimer* _bundleidTimer;
     NSTimer* _openappTimer;
     BOOL     _firstRun;
+    TasksManager* tasksManager;
 }
 
 @property (copy, nonatomic)NSString* appId;
@@ -44,21 +47,30 @@
     return sharedInstance;
 }
 
-- (void)doTaskId:(NSString *)appid appName:(NSString *)name appUrl:(NSString *)url playTime:(NSUInteger)ptime
+- (void)doTaskId:(NSString *)appid appName:(NSString *)name appUrl:(NSString *)url playTime:(NSUInteger)ptime bundleId:(NSString *)bundleid
+       otherName:(NSString *)othername bounus:(float)bounus
 {
-    self.appId = appid ;
-    self.appName = name ;
-    self.appUrl = url ;
-    self.playTime = ptime ;
+    Task* task = TaskMake(appid, name, url, ptime, bundleid, othername, bounus);
+    [task start];
     
-    _firstRun = YES;
+    tasksManager = [TasksManager getInstance];
     
-    [self setupCommitIDObserver] ;
+    //先判断有没有相同的任务存在
+    BOOL isExist = NO;
+    for (Task* t in tasksManager.mTasks) {
+        if ([t.appid isEqualToString:appid]) {
+            //任务已经存在
+            [t stopTimer];
+            [t start];
+            
+            isExist = YES;
+        }
+    }
     
-    //监测做任务的情况
-    _processTimer = [NSTimer scheduledTimerWithTimeInterval:PROCESS_REFRESH_TIME target:self selector:@selector(checkRunningProcess) userInfo:nil repeats:YES];
-    [_processTimer fire];
-    
+    if (!isExist) {
+        [tasksManager.mTasks addObject:task];
+        [task start];
+    }
 }
 
 - (void)savePreBundleId:(NSString *)bid
@@ -83,28 +95,13 @@
     [_bundleidTimer fire];
 }
 
-- (NSString *)getappurl
-{
-    return _appUrl;
-}
-
-- (NSString *)getappname
-{
-    return _appName;
-}
-
-- (NSString *)getappid
-{
-    return _appId;
-}
-
 - (void)checkNewInstallAppid
 {
     NSArray* array = [[ProcessManager getInstance] getAllAppsInstalled];
     
     BOOL isExist = NO;
     for (NSString* aid in array) {
-        
+       
         isExist = NO;
         for (NSString* bid in self.pre_installedApps) {
             if ([bid isEqualToString:aid]) {
@@ -123,8 +120,36 @@
             [[LoginManager getInstance] commitBundleID:aid];
         }
     }
+    
+    //监测正在进行中的任务是否卸载 默认未卸载
+    
+    NSMutableArray*  xiezia = [NSMutableArray new];
+    TasksManager* manager = [TasksManager getInstance];
+    for (Task* t in manager.mTasks) {
+        BOOL isuninstalled = YES;  //挨个检查
+        for (NSString* buid in array) {
+            if ([t.bundleid isEqualToString:buid]) {
+                isuninstalled = NO;
+            }
+        }
+        if (isuninstalled) {
+            //卸载了
+            [t stopTimer];
+            [[LoginManager getInstance] requestUninstalledApp:t.appid bundleId:t.bundleid];
+            [xiezia addObject:t];
+        }
+    }
+    if (xiezia.count > 0) {
+        for (Task* t in xiezia) {
+            [manager.mTasks removeObject:t];
+        }
+    }
 }
 
+/**
+    单任务模式下用于实时监控进程是否正在运行的,现在不需要了。
+ */
+/*
 - (void)checkRunningProcess
 {
     static int countnum = 0 ;
@@ -178,6 +203,7 @@
         countnum = 0 ;
     }
 }
+ */
 
 - (void)setupCommitIDObserver
 {
@@ -197,7 +223,6 @@
                                                    }else
                                                    {
                                                        //任务成功后提交失败
-                                                       
                                                    }
                                                    
                                                }];

@@ -10,12 +10,9 @@
 
 @interface TasksManager : NSObject
 
+@property(strong, nonatomic)NSMutableArray* mTasks;
+
 + (id)getInstance;
-
-- (void)setTasks:(NSArray *)tasks;
-- (NSArray*)getTasks;
-
-- (NSArray *)parseLoginData:(NSDictionary *)data;
 
 @end
 

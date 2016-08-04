@@ -16,15 +16,6 @@
 - (void)login;
 
 /**
- * 查询所有的任务
- * 此方法请求服务器端所有的任务，
- * 暂时废弃，改为服务器端判断。
- */
-/*
-- (void)requestAllTasks;
- */
-
-/**
  *  向服务器提交本地已经下载的应用的bundle id列表
  */
 - (void)commitAllBundleIDs;
@@ -37,12 +28,24 @@
 /**
  *  向服务器请求任务已经完成
  */
-- (void)requestTaskFinishedWithTaskID:(NSString*)taskid;
+- (void)requestTaskFinishedWithTaskID:(NSString*)appID AppName:(NSString *)appName AppUrl:(NSString *)appUrl OtherName:(NSString *)oName Bounus:(float)bounus;
 
 /**
  *  向服务器提交开始计时。
  */
-- (void)requestToMonitorTime;
+- (void)requestToMonitorTime:(NSString *)appid;
+
+/**
+ *  查询需要监听的BundleIds 暂时不需要了
+ */
+/*
+- (void)requestAllBundleIdsNeedsToMonitor;
+ */
+
+/**
+ *  卸载了某一正在进行中的任务的应用
+ */
+- (void)requestUninstalledApp:(NSString *)unaryId bundleId:(NSString *)bundleId;
 
 @end
 
