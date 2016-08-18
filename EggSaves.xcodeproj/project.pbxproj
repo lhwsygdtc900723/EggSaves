@@ -11,9 +11,7 @@
 		B903F6AC1D37510A00D8A138 /* AudioManager.m in Sources */ = {isa = PBXBuildFile; fileRef = B903F69A1D37510A00D8A138 /* AudioManager.m */; };
 		B903F6AD1D37510A00D8A138 /* DataCenter.m in Sources */ = {isa = PBXBuildFile; fileRef = B903F69C1D37510A00D8A138 /* DataCenter.m */; };
 		B903F6AF1D37510A00D8A138 /* ProcessManager.m in Sources */ = {isa = PBXBuildFile; fileRef = B903F6A01D37510A00D8A138 /* ProcessManager.m */; };
-		B903F6B01D37510A00D8A138 /* TasksManager.m in Sources */ = {isa = PBXBuildFile; fileRef = B903F6A21D37510A00D8A138 /* TasksManager.m */; };
 		B903F6B21D37510A00D8A138 /* Task.m in Sources */ = {isa = PBXBuildFile; fileRef = B903F6A71D37510A00D8A138 /* Task.m */; };
-		B903F6B31D37510A00D8A138 /* TimeHeart.m in Sources */ = {isa = PBXBuildFile; fileRef = B903F6A91D37510A00D8A138 /* TimeHeart.m */; };
 		B903F6E01D3751BE00D8A138 /* EncryptUtils.mm in Sources */ = {isa = PBXBuildFile; fileRef = B903F6B71D3751BE00D8A138 /* EncryptUtils.mm */; };
 		B903F6E11D3751BE00D8A138 /* HashUtils.mm in Sources */ = {isa = PBXBuildFile; fileRef = B903F6B91D3751BE00D8A138 /* HashUtils.mm */; };
 		B903F6E21D3751BE00D8A138 /* ELLIOKitDumper.m in Sources */ = {isa = PBXBuildFile; fileRef = B903F6BC1D3751BE00D8A138 /* ELLIOKitDumper.m */; };
@@ -54,12 +52,8 @@
 		B903F69E1D37510A00D8A138 /* LoginManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoginManager.m; sourceTree = "<group>"; };
 		B903F69F1D37510A00D8A138 /* ProcessManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProcessManager.h; sourceTree = "<group>"; };
 		B903F6A01D37510A00D8A138 /* ProcessManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProcessManager.m; sourceTree = "<group>"; };
-		B903F6A11D37510A00D8A138 /* TasksManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TasksManager.h; sourceTree = "<group>"; };
-		B903F6A21D37510A00D8A138 /* TasksManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TasksManager.m; sourceTree = "<group>"; };
 		B903F6A61D37510A00D8A138 /* Task.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Task.h; sourceTree = "<group>"; };
 		B903F6A71D37510A00D8A138 /* Task.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Task.m; sourceTree = "<group>"; };
-		B903F6A81D37510A00D8A138 /* TimeHeart.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TimeHeart.h; sourceTree = "<group>"; };
-		B903F6A91D37510A00D8A138 /* TimeHeart.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TimeHeart.m; sourceTree = "<group>"; };
 		B903F6AB1D37510A00D8A138 /* CommonDefine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CommonDefine.h; sourceTree = "<group>"; };
 		B903F6B61D3751BE00D8A138 /* EncryptUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EncryptUtils.h; sourceTree = "<group>"; };
 		B903F6B71D3751BE00D8A138 /* EncryptUtils.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = EncryptUtils.mm; sourceTree = "<group>"; };
@@ -150,8 +144,6 @@
 				B903F69E1D37510A00D8A138 /* LoginManager.m */,
 				B903F69F1D37510A00D8A138 /* ProcessManager.h */,
 				B903F6A01D37510A00D8A138 /* ProcessManager.m */,
-				B903F6A11D37510A00D8A138 /* TasksManager.h */,
-				B903F6A21D37510A00D8A138 /* TasksManager.m */,
 			);
 			path = Manager;
 			sourceTree = "<group>";
@@ -161,8 +153,6 @@
 			children = (
 				B903F6A61D37510A00D8A138 /* Task.h */,
 				B903F6A71D37510A00D8A138 /* Task.m */,
-				B903F6A81D37510A00D8A138 /* TimeHeart.h */,
-				B903F6A91D37510A00D8A138 /* TimeHeart.m */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -482,9 +472,7 @@
 				B92784041CFEE43A009715E5 /* BLHud.m in Sources */,
 				B903F6EF1D3751BE00D8A138 /* View+MASAdditions.m in Sources */,
 				B903F6AD1D37510A00D8A138 /* DataCenter.m in Sources */,
-				B903F6B31D37510A00D8A138 /* TimeHeart.m in Sources */,
 				B903F6FA1D3751F500D8A138 /* NSString+MD5.m in Sources */,
-				B903F6B01D37510A00D8A138 /* TasksManager.m in Sources */,
 				B903F6E31D3751BE00D8A138 /* ELLIOKitNodeInfo.m in Sources */,
 				B903F6F01D3751BE00D8A138 /* ViewController+MASAdditions.m in Sources */,
 				B9D1E2C21CEFFC9B0028D7D9 /* AppDelegate.m in Sources */,

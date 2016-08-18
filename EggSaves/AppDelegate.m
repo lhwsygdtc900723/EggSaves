@@ -21,11 +21,13 @@
 
 - (BOOL)application:(UIApplication *)app openURL:(NSURL *)url options:(NSDictionary<NSString *,id> *)options
 {
+    
+    [DataCenter getInstance].isBackGround = NO;
     //此为h5调用时候的入口 , 会传入进程号，以及要打开的app的url， 以及任务需要试玩的时间  (时间以分钟为单位)
     //wangzhuan?appid=%@&appname=%@&appurl=%@&tasktime=%d&bundleid=%@&otherName=%@&bonus=%d
     //进来之后就要记录试玩的时间, 以及试玩时间结束后通知服务器，任务已经完成
     
-    NSString* urlString = [url absoluteString];
+    NSString* urlString = [self URLDecodedString:[url absoluteString]] ;
     
     NSLog(@"absoluteString = %@", urlString);
     
@@ -36,7 +38,10 @@
     }
     
     NSString* str1      = a1[1] ;
-    NSArray*  a2        = [str1 componentsSeparatedByString:@"&"] ;
+    
+    NSString* jiemi     = [self uriFromStrintg:str1];
+    
+    NSArray*  a2        = [jiemi componentsSeparatedByString:@"&"] ;
     
     if (a2.count < 7) {
         return NO;
@@ -58,6 +63,55 @@
     return YES;
 }
 
+- (NSString *)uriFromStrintg:(NSString *)signStr{
+    
+    NSString* src1 = [signStr lowercaseString];
+    
+    const char* ccc = [src1 cStringUsingEncoding:NSUTF8StringEncoding];
+    
+    char* jiemi = (char *)malloc([src1 length]/2 + 1);
+    memset(jiemi, 0, [src1 length]/2 + 1);
+    for (int i = 0; ccc[2*i]; ++i) {
+        
+        char* temp = (char *)malloc(2);
+        
+        temp[0] = ccc[2*i];
+        temp[1] = ccc[2*i+1];
+        
+        jiemi[i] = fun(temp) - 3;
+        
+        free(temp);
+    }
+    
+    printf("jiemi = %s", jiemi);
+    
+    NSString* unsignStr = [self URLDecodedString:[NSString stringWithUTF8String:jiemi]];
+    
+    free(jiemi);
+    
+    return unsignStr;
+}
+
+int  fun(char*s)
+{
+    int i,t;
+    int sum=0;
+    for(i=0;s[i];i++)
+    {
+        if(s[i]<='9')t=s[i]-'0';
+        else  t=s[i]-'a'+10;
+        sum=sum*16+t;
+    }
+    return sum;
+}
+
+-(NSString *)URLDecodedString:(NSString *)str
+{
+    NSString *decodedString=(__bridge_transfer NSString *)CFURLCreateStringByReplacingPercentEscapesUsingEncoding(NULL, (__bridge CFStringRef)str, CFSTR(""), CFStringConvertNSStringEncodingToEncoding(NSUTF8StringEncoding));
+    
+    return decodedString;
+}
+
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     
     [[AVAudioSession sharedInstance] setCategory:AVAudioSessionCategoryPlayback withOptions:AVAudioSessionCategoryOptionMixWithOthers error:nil];
@@ -73,6 +127,10 @@
         [[UIApplication sharedApplication] registerUserNotificationSettings:settings];
     }
     
+//    BOOL can = [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"smzdm:"]];
+    
+//    NSLog(@"keyidakai is %d", can);
+    
     return YES;
 }
 
@@ -80,6 +138,8 @@
 }
 
 - (void)applicationDidEnterBackground:(UIApplication *)application {
+    
+    [DataCenter getInstance].isBackGround = YES;
     
     UIApplication*   app = [UIApplication sharedApplication];
     __block    UIBackgroundTaskIdentifier bgTask;
@@ -103,10 +163,13 @@
 
 - (void)applicationWillEnterForeground:(UIApplication *)application {
     
+    [DataCenter getInstance].isBackGround = NO;
+    
     if (self.controller) {
         [self.controller panduanTongzhi];
     }
     
+    [UIApplication sharedApplication].applicationIconBadgeNumber = 0;
 }
 
 - (void)applicationDidBecomeActive:(UIApplication *)application {

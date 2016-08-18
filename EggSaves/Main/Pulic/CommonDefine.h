@@ -14,6 +14,7 @@ extern NSString* const NSUserDoTaskCompletedNotification ;
 
 #define NO_NETWORK   0
 
-#define RECREATE_USER   0
+#define RECREATE_USER   1
+
 
 #endif /* CommonDefine_h */

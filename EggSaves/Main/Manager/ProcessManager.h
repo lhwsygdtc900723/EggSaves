@@ -15,12 +15,12 @@
 /**
  *  扫描手机中所有当前正在运行的进程
  */
-- (void)loadIOKit ;
+//- (void)loadIOKit ;
 
 /**
  *  判断进程name是否正在运行
  */
-- (BOOL)processIsRunning:(NSString *)name;
+//- (BOOL)processIsRunning:(NSString *)name;
 
 /**
  *  获取所有已安装应用的bundle id

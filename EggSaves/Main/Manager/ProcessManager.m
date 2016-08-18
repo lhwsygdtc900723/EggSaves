@@ -101,7 +101,7 @@
 {
     Class LSApplicationWorkspace_class = objc_getClass("LSApplicationWorkspace");
     NSObject* workspace = [LSApplicationWorkspace_class performSelector:@selector(defaultWorkspace)];
-    NSArray* arr = [workspace performSelector:@selector(allApplications)] ;
+    NSArray* arr = [workspace performSelector:@selector(allInstalledApplications)] ;
     
     NSMutableArray* apps = [[NSMutableArray alloc]initWithCapacity:arr.count];
     for (NSUInteger i=0; i<arr.count; ++i) {
@@ -125,6 +125,10 @@
 }
 
 - (void)allApplications
+{
+}
+
+- (void)allInstalledApplications
 {
 }
 

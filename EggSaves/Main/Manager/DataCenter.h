@@ -6,6 +6,10 @@
 
 + (DataCenter *)getInstance;
 
+@property (strong, nonatomic)NSMutableArray* tasks;
+
+@property (assign, nonatomic)BOOL isBackGround;
+
 /**
  *  h5调起此程序，用于监控进程下载试玩完成 情况
  *  param : appid 任务id
@@ -19,6 +23,8 @@
 - (void)savePreBundleId:(NSString *)bid;
 - (void)savePreBundleIds:(NSArray *)ids;
 - (void)startMonitorBundleID;
+
+- (NSArray *)getPreBundleId;
 
 
 @end
